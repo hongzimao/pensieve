@@ -1,0 +1,28 @@
+{
+   "background": {
+      "persistent": true,
+      "scripts": [ "underscore-1.8.3.js", "background.js" ]
+   },
+   "browser_action": {
+      "default_icon": "icon-off.png",
+      "name": "Cache Killer",
+      "title": "Cache Killer disabled"
+   },
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+   "description": "Automatically clear your browser cache before loading a page. Can be enabled/disabled with a single mouse click.",
+   "icons": {
+      "128": "icon128.png",
+      "16": "icon16.png",
+      "48": "icon48.png"
+   },
+   "incognito": "split",
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCjJO/o6xvIe2STM8DeuozWVRDI3pTI20rxqVdagWEYzxcrJ1LDWMMHjtegjHDcvDA96muwU+VLd/rU3fzPBGSwjLGdWPqHzHTmmj6KOy5+hyTvJm2FFp4CnLtMnzS52WL1MUw18u8Oe7US7aetjU23y+9z7MxTNlkffikqudzhvwIDAQAB",
+   "manifest_version": 2,
+   "minimum_chrome_version": "19.0.1028.0",
+   "name": "Cache Killer",
+   "offline_enabled": false,
+   "options_page": "options.html",
+   "permissions": [ "browsingData", "\u003Call_urls>", "tabs", "http://*/*", "https://*/*", "webRequest", "webRequestBlocking", "webNavigation" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.2.4"
+}

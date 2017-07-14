@@ -1,0 +1,191 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,500,500italic,700,700italic">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700">
+  <style>
+    body {
+      font-family: Roboto;
+      font-size: 0.95em;
+      background-color: white;
+      overflow: hidden;
+    }
+    .display-name {
+      margin: 15px 8px 3px 8px;
+      overflow: hidden;
+    }
+    .status-text {
+      color: rgb(125, 125, 125);
+      margin: 3px 8px;
+      overflow: hidden;
+    }
+    .media-controls {
+      margin-top: 6px;
+      display: block;
+      overflow: hidden;
+    }
+    .ellipsis {
+      width: 90%;
+      padding: 0% 1%;
+      white-space:nowrap;
+      text-overflow: ellipsis;
+    }
+    .button-holder {
+      float:left;
+    }
+
+    .paper-icon-button-0 {
+      display: inline-block;
+      position: relative;
+      padding: 8px;
+      outline: none;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      z-index: 0;
+      line-height: 1;
+
+      width: 40px;
+      height: 40px;
+
+      box-sizing: border-box !important;
+    }
+
+    paper-checkbox {
+      display: inline-block;
+      white-space: nowrap;
+      cursor: pointer;
+      font-family: 'Roboto', 'Noto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    paper-checkbox:focus {
+      outline: none;
+    }
+
+    paper-checkbox .hidden.paper-checkbox {
+      display: none;
+    }
+
+    paper-checkbox #checkboxContainer.paper-checkbox {
+      display: inline-block;
+      position: relative;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      margin: 11px 8px 8px 8px;
+      vertical-align: top;
+      background-color: transparent;
+    }
+
+    paper-checkbox #checkbox.paper-checkbox {
+      position: relative;
+      box-sizing: border-box;
+      height: 100%;
+      border: solid 2px;
+      border-radius: 2px;
+      pointer-events: none;
+      -webkit-transition: background-color 140ms, border-color 140ms;
+      transition: background-color 140ms, border-color 140ms;
+    }
+
+    paper-checkbox #checkbox.checked.paper-checkbox #checkmark.paper-checkbox {
+      -webkit-animation: checkmark-expandpaper-checkbox 140ms ease-out forwards;
+      animation: checkmark-expandpaper-checkbox 140ms ease-out forwards;
+    }
+
+    @-webkit-keyframes checkmark-expandpaper-checkbox {
+      0% {
+        -webkit-transform: scale(0, 0) rotate(45deg);
+      }
+
+      100% {
+        -webkit-transform: scale(1, 1) rotate(45deg);
+      }
+
+    }
+
+    @keyframes checkmark-expandpaper-checkbox {
+      0% {
+        transform: scale(0, 0) rotate(45deg);
+      }
+
+      100% {
+        transform: scale(1, 1) rotate(45deg);
+      }
+
+    }
+
+    paper-checkbox #checkbox.checked.paper-checkbox {
+      background-color: #1976D2;
+      border-color: #1976D2;
+    }
+
+    paper-checkbox #checkmark.paper-checkbox {
+      position: absolute;
+      width: 36%;
+      height: 70%;
+      border-style: solid;
+      border-top: none;
+      border-left: none;
+      border-right-width: calc(2/15 * 18px);
+      border-bottom-width: calc(2/15 * 18px);
+      border-color: white;
+      -webkit-transform-origin: 97% 86%;
+      transform-origin: 97% 86%;
+      box-sizing: content-box;
+    }
+
+    paper-checkbox #checkboxLabel.paper-checkbox {
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 0;
+      white-space: normal;
+      line-height: normal;
+      margin-top: 11px;
+    }
+
+    paper-checkbox[checked] #checkboxLabel.paper-checkbox {
+    }
+
+    paper-checkbox .subtitle {
+      display: block;
+      font-size: 0.8em;
+      margin-top: 2px;
+      width: 249px;
+    }
+  </style>
+  <script src="view.js"></script>
+</head>
+<body>
+  <div id="cloudDetails">
+    <div id="displayNameHolder" class="display-name ellipsis">
+      <span>Casting:</span>
+    </div>
+    <div id="statusTextHolder" class="status-text ellipsis">
+      <span></span>
+    </div>
+    <div class="media-controls">
+      <span class="button-holder">
+        <div id="mute" class="paper-icon-button-0" role="button" tabindex="0" aria-disabled="false" title="Mute">
+          <!-- Copy of the Polymer iron icon av:volume-up svg. -->
+          <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></g></svg>
+        </div>
+        <div id="unmute" class="paper-icon-button-0" role="button" tabindex="0" aria-disabled="false" title="Unmute">
+          <!-- Copy of the Polymer iron icon av:volume-off svg. -->
+          <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><g><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"></path></g></svg>
+        </div>
+      </span>
+
+      <!-- NOTE: Not an actual paper checkbox, it only mimics it using css and custom javascript. -->
+      <paper-checkbox id="checkboxElement" role="checkbox" tabindex="0" toggles="" aria-checked="false" aria-disabled="false"><div id="checkboxContainer" class="paper-checkbox"><div id="checkbox" class="paper-checkbox"><div id="checkmark" class="hidden paper-checkbox"></div></div></div><div id="checkboxLabel" class="paper-checkbox">
+          <span id='checkboxLabelTitle'></span>
+          <span id='checkboxLabelSubtitle' class="subtitle"></span>
+        </div></paper-checkbox>
+    </div>
+  </div>
+</body>
+</html>

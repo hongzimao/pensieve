@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Dash.js Rocks haha</title>
+    </head>
+    <body>
+        <div>
+            <video id="videoPlayer" controls="true"></video>
+        </div>
+	<script src="dash.all.min.js"></script>
+        <script>
+            (function(){
+                var url = "/Manifest.mpd";
+                var player = dashjs.MediaPlayer().create()
+
+                var abr_algorithms = {0: 'Default', 1: 'Fixed Rate (0)', 2: 'Buffer Based', 3: 'Rate Based', 4: 'RL', 5: 'Festive', 6: 'Bola'};
+                var abr_id = 2;
+
+                if ( abr_id > 1 && abr_id != 6 ) {
+                    player.enablerlABR(true);
+                }
+
+                // uncomment this block if you want to change the buffer size that dash tries to maintain
+                player.setBufferTimeAtTopQuality(60);
+                player.setStableBufferTime(60);
+                player.setBufferToKeep(60);
+                player.setBufferPruningInterval(60);
+
+                player.initialize(document.querySelector("#videoPlayer"), url, true);
+
+                if ( abr_id == 6 ) { //BOLA
+                    player.enableBufferOccupancyABR(true);
+                }
+                player.setAbrAlgorithm(abr_id);
+
+                if ( abr_id in abr_algorithms ) {
+                    document.title = abr_algorithms[abr_id];
+                } else {
+                    document.title = "Unknown ABR Algorithm";
+                }
+            })();
+        </script>
+    </body>
+</html>

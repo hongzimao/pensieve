@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Dash.js Rocks haha</title>
+    </head>
+    <body>
+        <div>
+            <video id="videoPlayer" controls="true" width="1280" height="720"></video>
+        </div>
+	<script src="rb_p1_dash.all.js"></script>
+        <script>
+            (function(){
+                var url = "Manifest_updated.mpd";
+                var context = new Dash.di.DashContext();
+                var player = new MediaPlayer(context);
+                player.startup();
+                player.attachView(document.querySelector("#videoPlayer"));
+                player.attachSource(url);
+            })();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Dash.js Rocks haha</title>
+    </head>
+    <body>
+        <div>
+            <video id="videoPlayer" controls="true"></video>
+        </div>
+	<script src="dash.all.js"></script>
+        <script>
+            (function(){
+                //var url = "http://dash.edgesuite.net/envivio/dashpr/clear/Manifest.mpd";
+                var url = "/Manifest.mpd";
+                var context = new Dash.di.DashContext();
+                var player = new MediaPlayer(context);
+                player.startup();
+                var abr_algorithms = {0: 'Default', 1: 'Buffer Based', 2: 'Rate Based', 3: 'Fixed Quality (0)', 4: 'Festive', 5: 'Fixed Quality (0)', 6: 'Reinforcement Learning'};
+                var abr_id = 6;
+                player.setAbrAlgorithm(abr_id);
+                if ( abr_id in abr_algorithms ) {
+                    document.title = abr_algorithms[abr_id];
+                } else {
+                    document.title = "Unknown ABR Algorithm";
+                }
+                player.attachView(document.querySelector("#videoPlayer"));
+                player.attachSource(url);
+            })();
+        </script>
+    </body>
+</html>
