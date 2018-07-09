@@ -15,6 +15,7 @@ class ActorNetwork(object):
     Input to the network is the state, output is the distribution
     of all actions.
     """
+
     def __init__(self, sess, state_dim, action_dim, learning_rate):
         self.sess = sess
         self.s_dim = state_dim
@@ -45,11 +46,11 @@ class ActorNetwork(object):
 
         # Compute the objective (log action_vector and entropy)
         self.obj = tf.reduce_sum(tf.multiply(
-                       tf.log(tf.reduce_sum(tf.multiply(self.out, self.acts),
-                                            reduction_indices=1, keep_dims=True)),
-                       -self.act_grad_weights)) \
-                   + ENTROPY_WEIGHT * tf.reduce_sum(tf.multiply(self.out,
-                                                           tf.log(self.out + ENTROPY_EPS)))
+            tf.log(tf.reduce_sum(tf.multiply(self.out, self.acts),
+                                 reduction_indices=1, keepdims=True)),
+            -self.act_grad_weights)) \
+            + ENTROPY_WEIGHT * tf.reduce_sum(tf.multiply(self.out,
+                                                         tf.log(self.out + ENTROPY_EPS)))
 
         # Combine the gradients here
         self.actor_gradients = tf.gradients(self.obj, self.network_params)
@@ -73,7 +74,8 @@ class ActorNetwork(object):
             split_3_flat = tflearn.flatten(split_3)
             split_4_flat = tflearn.flatten(split_4)
 
-            merge_net = tflearn.merge([split_0, split_1, split_2_flat, split_3_flat, split_4_flat, split_5], 'concat')
+            merge_net = tflearn.merge([split_0, split_1, split_2_flat,
+                                       split_3_flat, split_4_flat, split_5], 'concat')
 
             dense_net_0 = tflearn.fully_connected(merge_net, 128, activation='relu')
             out = tflearn.fully_connected(dense_net_0, self.a_dim, activation='softmax')
@@ -119,6 +121,7 @@ class CriticNetwork(object):
     Input to the network is the state and action, output is V(s).
     On policy: the action must be obtained from the output of the Actor network.
     """
+
     def __init__(self, sess, state_dim, learning_rate):
         self.sess = sess
         self.s_dim = state_dim
@@ -171,7 +174,8 @@ class CriticNetwork(object):
             split_3_flat = tflearn.flatten(split_3)
             split_4_flat = tflearn.flatten(split_4)
 
-            merge_net = tflearn.merge([split_0, split_1, split_2_flat, split_3_flat, split_4_flat, split_5], 'concat')
+            merge_net = tflearn.merge([split_0, split_1, split_2_flat,
+                                       split_3_flat, split_4_flat, split_5], 'concat')
 
             dense_net_0 = tflearn.fully_connected(merge_net, 128, activation='relu')
             out = tflearn.fully_connected(dense_net_0, 1, activation='linear')

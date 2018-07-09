@@ -16,6 +16,7 @@ class ActorNetwork(object):
     Input to the network is the state, output is the distribution
     of all actions.
     """
+
     def __init__(self, sess, state_dim, action_dim, learning_rate):
         self.sess = sess
         self.s_dim = state_dim
@@ -52,11 +53,11 @@ class ActorNetwork(object):
 
         # Compute the objective (log action_vector and entropy)
         self.obj = tf.reduce_sum(tf.mul(
-                       tf.log(tf.reduce_sum(tf.mul(self.out, self.acts),
-                                            reduction_indices=1, keep_dims=True)),
-                       -self.act_grad_weights)) \
-                   + ENTROPY_WEIGHT * tf.reduce_sum(tf.mul(self.out,
-                                                           tf.log(self.out + ENTROPY_EPS)))
+            tf.log(tf.reduce_sum(tf.mul(self.out, self.acts),
+                                 reduction_indices=1, keepdims=True)),
+            -self.act_grad_weights)) \
+            + ENTROPY_WEIGHT * tf.reduce_sum(tf.mul(self.out,
+                                                    tf.log(self.out + ENTROPY_EPS)))
 
         # Combine the gradients here
         self.actor_gradients = tf.gradients(self.obj, self.network_params)
@@ -83,7 +84,8 @@ class ActorNetwork(object):
             flatten_1 = tflearn.flatten(split_4)
             flatten_2 = tflearn.flatten(split_5)
 
-            merge_net = tflearn.merge([split_0, split_1, split_2, flatten_0, flatten_1, flatten_2], 'concat')
+            merge_net = tflearn.merge(
+                [split_0, split_1, split_2, flatten_0, flatten_1, flatten_2], 'concat')
 
             dense_net_0 = tflearn.fully_connected(merge_net, 128, activation='relu')
 
@@ -99,7 +101,7 @@ class ActorNetwork(object):
     def train(self, inputs, acts, act_grad_weights):
         # there can be only one kind of mask in a training epoch
         for i in xrange(inputs.shape[0]):
-            assert np.all(inputs[0, MASK_DIM, -MAX_BR_LEVELS:] == \
+            assert np.all(inputs[0, MASK_DIM, -MAX_BR_LEVELS:] ==
                           inputs[i, MASK_DIM, -MAX_BR_LEVELS:])
 
         # action dimension matches with mask length
@@ -114,7 +116,7 @@ class ActorNetwork(object):
 
     def predict(self, inputs):
         for i in xrange(inputs.shape[0]):
-            assert np.all(inputs[0, MASK_DIM, -MAX_BR_LEVELS:] == \
+            assert np.all(inputs[0, MASK_DIM, -MAX_BR_LEVELS:] ==
                           inputs[i, MASK_DIM, -MAX_BR_LEVELS:])
 
         return self.sess.run(self.out, feed_dict={
@@ -124,7 +126,7 @@ class ActorNetwork(object):
 
     def get_gradients(self, inputs, acts, act_grad_weights):
         for i in xrange(inputs.shape[0]):
-            assert np.all(inputs[0, MASK_DIM, -MAX_BR_LEVELS:] == \
+            assert np.all(inputs[0, MASK_DIM, -MAX_BR_LEVELS:] ==
                           inputs[i, MASK_DIM, -MAX_BR_LEVELS:])
 
         return self.sess.run(self.actor_gradients, feed_dict={
@@ -153,6 +155,7 @@ class CriticNetwork(object):
     Input to the network is the state and action, output is V(s).
     On policy: the action must be obtained from the output of the Actor network.
     """
+
     def __init__(self, sess, state_dim, learning_rate):
         self.sess = sess
         self.s_dim = state_dim
@@ -207,7 +210,8 @@ class CriticNetwork(object):
             flatten_1 = tflearn.flatten(split_4)
             flatten_2 = tflearn.flatten(split_5)
 
-            merge_net = tflearn.merge([split_0, split_1, split_2, flatten_0, flatten_1, flatten_2], 'concat')
+            merge_net = tflearn.merge(
+                [split_0, split_1, split_2, flatten_0, flatten_1, flatten_2], 'concat')
 
             dense_net_0 = tflearn.fully_connected(merge_net, 100, activation='relu')
             out = tflearn.fully_connected(dense_net_0, 1, activation='linear')
