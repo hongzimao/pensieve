@@ -53,7 +53,7 @@ def main():
 					to_send = (millisec_count * pkt_per_millisec) - pkt_count
 					to_send = np.floor(to_send)
 
-					for i in xrange(int(to_send)):
+					for r in xrange(int(to_send)):
 						mf.write(str(millisec_time) + '\n')
 
 					pkt_count += to_send
