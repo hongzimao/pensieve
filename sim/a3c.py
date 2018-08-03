@@ -67,7 +67,7 @@ class ActorNetwork(object):
             split_2 = tflearn.conv_1d(inputs[:, 2:3, :], 128, 4, activation='relu')
             split_3 = tflearn.conv_1d(inputs[:, 3:4, :], 128, 4, activation='relu')
             split_4 = tflearn.conv_1d(inputs[:, 4:5, :A_DIM], 128, 4, activation='relu')
-            split_5 = tflearn.fully_connected(inputs[:, 4:5, -1], 128, activation='relu')
+            split_5 = tflearn.fully_connected(inputs[:, 5:6, -1], 128, activation='relu')
 
             split_2_flat = tflearn.flatten(split_2)
             split_3_flat = tflearn.flatten(split_3)
@@ -165,7 +165,7 @@ class CriticNetwork(object):
             split_2 = tflearn.conv_1d(inputs[:, 2:3, :], 128, 4, activation='relu')
             split_3 = tflearn.conv_1d(inputs[:, 3:4, :], 128, 4, activation='relu')
             split_4 = tflearn.conv_1d(inputs[:, 4:5, :A_DIM], 128, 4, activation='relu')
-            split_5 = tflearn.fully_connected(inputs[:, 4:5, -1], 128, activation='relu')
+            split_5 = tflearn.fully_connected(inputs[:, 5:6, -1], 128, activation='relu')
 
             split_2_flat = tflearn.flatten(split_2)
             split_3_flat = tflearn.flatten(split_3)

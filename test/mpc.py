@@ -174,10 +174,10 @@ def main():
 
 
         # future chunks length (try 4 if that many remaining)
-        last_index = int(CHUNK_TIL_VIDEO_END_CAP - video_chunk_remain)
+        last_index = int(CHUNK_TIL_VIDEO_END_CAP - video_chunk_remain)-1
         future_chunk_length = MPC_FUTURE_CHUNK_COUNT
-        if ( TOTAL_VIDEO_CHUNKS - last_index < 5 ):
-            future_chunk_length = TOTAL_VIDEO_CHUNKS - last_index
+        if ( TOTAL_VIDEO_CHUNKS - last_index - 1 < 5 ):
+            future_chunk_length = TOTAL_VIDEO_CHUNKS - last_index - 1
 
         # all possible combinations of 5 chunk bitrates (9^5 options)
         # iterate over list and for each, compute reward and store max reward combination

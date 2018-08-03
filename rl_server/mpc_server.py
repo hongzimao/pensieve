@@ -168,8 +168,8 @@ def make_request_handler(input_dict):
                 # future chunks length (try 4 if that many remaining)
                 last_index = int(post_data['lastRequest'])
                 future_chunk_length = MPC_FUTURE_CHUNK_COUNT
-                if ( TOTAL_VIDEO_CHUNKS - last_index < 4 ):
-                    future_chunk_length = TOTAL_VIDEO_CHUNKS - last_index
+                if ( TOTAL_VIDEO_CHUNKS - last_index-1 < 5 ):
+                    future_chunk_length = TOTAL_VIDEO_CHUNKS - last_index - 1
 
                 # all possible combinations of 5 chunk bitrates (9^5 options)
                 # iterate over list and for each, compute reward and store max reward combination
