@@ -109,9 +109,8 @@ def main():
 
             # retrieve previous state
             if len(s_batch) == 0:
-                state = [np.zeros((S_INFO, S_LEN))]
-            else:
-                state = np.array(s_batch[-1], copy=True)
+                s_batch = [np.zeros((S_INFO, S_LEN))]
+            state = np.array(s_batch[-1], copy=True)
 
             # dequeue history record
             state = np.roll(state, -1, axis=1)
