@@ -10,6 +10,8 @@ os.environ['CUDA_VISIBLE_DEVICES']=''
 
 import numpy as np
 import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 import time
 import a3c
 
@@ -99,7 +101,7 @@ def make_request_handler(input_dict):
                                                   self.input_dict['last_bit_rate']) / M_IN_K
 
                 # --log reward--
-                # log_bit_rate = np.log(VIDEO_BIT_RATE[post_data['lastquality']] / float(VIDEO_BIT_RATE[0]))   
+                # log_bit_rate = np.log(VIDEO_BIT_RATE[post_data['lastquality']] / float(VIDEO_BIT_RATE[0]))
                 # log_last_bit_rate = np.log(self.input_dict['last_bit_rate'] / float(VIDEO_BIT_RATE[0]))
 
                 # reward = log_bit_rate \

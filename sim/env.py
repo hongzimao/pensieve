@@ -15,7 +15,8 @@ PACKET_SIZE = 1500  # bytes
 NOISE_LOW = 0.9
 NOISE_HIGH = 1.1
 VIDEO_SIZE_FILE = './video_size_'
-
+BUFFER_SIZE = 10
+VIDEO_BIT_RATE = [300,750,1200,1850,2850,4300]  # Kbps
 
 class Environment:
     def __init__(self, all_cooked_time, all_cooked_bw, random_seed=RANDOM_SEED):
@@ -28,6 +29,7 @@ class Environment:
 
         self.video_chunk_counter = 0
         self.buffer_size = 0
+        self.buffer = [0]*BUFFER_SIZE
 
         # pick a random trace file
         self.trace_idx = np.random.randint(len(self.all_cooked_time))
@@ -50,21 +52,50 @@ class Environment:
 
         assert quality >= 0
         assert quality < BITRATE_LEVELS
+        if quality < buffer_size:
+            #download EL
+            # self.video_size[quality]
+            if self.buffer[quality] < len(VIDEO_BIT_RATE):
+                video_chunk_size = self.video_size[self.buffer[quality]+1][self.video_chunk_counter + quality]
+                self.buffer[quality] = self.buffer[quality] + 1
+                self.z_t = self.z_t + self.buffer[quality]
 
-        video_chunk_size = self.video_size[quality][self.video_chunk_counter]
-        
-        # use the delivery opportunity in mahimahi
-        delay = 0.0  # in ms
-        video_chunk_counter_sent = 0  # in bytes
-        
-        while True:  # download video chunk over mahimahi
+        else:
+            #send BL
             throughput = self.cooked_bw[self.mahimahi_ptr] \
                          * B_IN_MB / BITS_IN_BYTE
             duration = self.cooked_time[self.mahimahi_ptr] \
                        - self.last_mahimahi_time
-	    
+
             packet_payload = throughput * duration * PACKET_PAYLOAD_PORTION
 
+            if self.mahimahi_ptr+1 >= len(self.cooked_bw):#condition because the video is ended??
+                # loop back in the beginning
+                # note: trace file starts with time 0
+
+            if video_chunk_counter_sent + packet_payload > video_chunk_size:
+                #this is the final BL, even more than that maybe, so we have to end the loop until or should we
+                #check for the time of chunk being run in the player
+                    # pass:
+                    # pass
+        video_chunk_size = self.video_size[quality][self.video_chunk_counter]
+
+        # use the delivery opportunity in mahimahi
+        delay = 0.0  # in ms
+        video_chunk_counter_sent = 0  # in bytes
+
+        while True:  # download video chunk over mahimahi
+            #defining throughput, how much data is being sent
+            throughput = self.cooked_bw[self.mahimahi_ptr] \
+                         * B_IN_MB / BITS_IN_BYTE
+            #defining duration #how much time is the data representing
+            duration = self.cooked_time[self.mahimahi_ptr] \
+                       - self.last_mahimahi_time
+
+            #total packet payload
+            packet_payload = throughput * duration * PACKET_PAYLOAD_PORTION
+
+            #if condition for checking if the shit is ending
             if video_chunk_counter_sent + packet_payload > video_chunk_size:
 
                 fractional_time = (video_chunk_size - video_chunk_counter_sent) / \
@@ -74,12 +105,15 @@ class Environment:
                 assert(self.last_mahimahi_time <= self.cooked_time[self.mahimahi_ptr])
                 break
 
+            #adding packet payload so that we know how much data is still there to be precessed
             video_chunk_counter_sent += packet_payload
+            #why delay?
             delay += duration
+            #last data bit time
             self.last_mahimahi_time = self.cooked_time[self.mahimahi_ptr]
             self.mahimahi_ptr += 1
 
-            if self.mahimahi_ptr >= len(self.cooked_bw):
+            if self.mahimahi_ptr >= len(self.cooked_bw):#condition because the video is ended??
                 # loop back in the beginning
                 # note: trace file starts with time 0
                 self.mahimahi_ptr = 1
@@ -89,8 +123,8 @@ class Environment:
         delay += LINK_RTT
 
 	# add a multiplicative noise to the delay
-	delay *= np.random.uniform(NOISE_LOW, NOISE_HIGH)
-
+	# delay *= np.random.uniform(NOISE_LOW, NOISE_HIGH) #check if this is right
+        delay *= np.random.uniform(NOISE_LOW, NOISE_HIGH)
         # rebuffer time
         rebuf = np.maximum(delay - self.buffer_size, 0.0)
 

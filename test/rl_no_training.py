@@ -2,6 +2,8 @@ import os
 os.environ['CUDA_VISIBLE_DEVICES']=''
 import numpy as np
 import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 import fixed_env as env
 import a3c
 import load_trace
@@ -25,6 +27,7 @@ RAND_RANGE = 1000
 SUMMARY_DIR = './results'
 LOG_FILE = './results/log_sim_rl'
 # log in format of time_stamp bit_rate buffer_size rebuffer_time chunk_size download_time reward
+# NN_MODEL = './models/nn_model_ep_2400.ckpt'
 NN_MODEL = './models/pretrain_linear_reward.ckpt'
 
 
@@ -97,7 +100,8 @@ def main():
                                                VIDEO_BIT_RATE[last_bit_rate]) / M_IN_K
 
             r_batch.append(reward)
-
+            # if reward<-200:
+            #     import pdb; pdb.set_trace()
             last_bit_rate = bit_rate
 
             # log time_stamp, bit_rate, buffer_size, reward

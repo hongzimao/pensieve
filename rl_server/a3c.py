@@ -1,6 +1,8 @@
 import numpy as np
 import tensorflow as tf
 import tflearn
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 
 GAMMA = 0.99

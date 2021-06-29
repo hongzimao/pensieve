@@ -85,8 +85,14 @@ def main():
     while True:  # serve video forever
         # the action is from the last decision
         # this is to make the framework similar to the real
+        # import pdb; pdb.set_trace()
+        # delay, sleep_time, buffer_size, rebuf, \
+        # video_chunk_size, \
+        # end_of_video, video_chunk_remain = \
+        #     net_env.get_video_chunk(bit_rate)
+
         delay, sleep_time, buffer_size, rebuf, \
-        video_chunk_size, \
+        video_chunk_size, next_video_chunk_sizes, \
         end_of_video, video_chunk_remain = \
             net_env.get_video_chunk(bit_rate)
 
@@ -148,7 +154,7 @@ def main():
             curr_error  = abs(past_bandwidth_ests[-1]-state[3,-1])/float(state[3,-1])
         past_errors.append(curr_error)
 
-        # pick bitrate according to MPC           
+        # pick bitrate according to MPC
         # first get harmonic mean of last 5 bandwidths
         past_bandwidths = state[3,-5:]
         while past_bandwidths[0] == 0.0:
@@ -211,7 +217,7 @@ def main():
                 last_quality = chunk_quality
             # compute reward for this combination (one reward per 5-chunk combo)
             # bitrates are in Mbits/s, rebuffer in seconds, and smoothness_diffs in Mbits/s
-            
+
             reward = (bitrate_sum/1000.) - (REBUF_PENALTY*curr_rebuffer_time) - (smoothness_diffs/1000.)
             # reward = bitrate_sum - (8*curr_rebuffer_time) - (smoothness_diffs)
 
@@ -269,4 +275,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

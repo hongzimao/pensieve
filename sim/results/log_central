@@ -1,0 +1,22 @@
+WARNING:tensorflow:From /Users/nihalgoalla/Documents/VideoStreaming/venv_pensieve/lib/python2.7/site-packages/tflearn/initializations.py:165: calling __init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+WARNING:tensorflow:From /Users/nihalgoalla/Documents/VideoStreaming/venv_pensieve/lib/python2.7/site-packages/tflearn/initializations.py:110: calling __init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+WARNING:tensorflow:From /Users/nihalgoalla/Documents/VideoStreaming/venv_pensieve/lib/python2.7/site-packages/tensorflow_core/python/util/deprecation.py:507: __init__ (from tensorflow.python.ops.init_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.initializers.variance_scaling instead with distribution=uniform to get equivalent behavior.
+WARNING:tensorflow:From /Users/nihalgoalla/Documents/VideoStreaming/grad/sim/a3c.py:51: calling reduce_sum_v1 (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+WARNING:tensorflow:From /Users/nihalgoalla/Documents/VideoStreaming/venv_pensieve/lib/python2.7/site-packages/tensorflow_core/python/training/rmsprop.py:119: calling __init__ (from tensorflow.python.ops.init_ops) with dtype is deprecated and will be removed in a future version.
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+WARNING:tensorflow:Issue encountered when serializing data_augmentation.
+Type is unsupported, or the types of the items don't match field type in CollectionDef. Note this is a warning and probably safe to ignore.
+'NoneType' object has no attribute 'name'
+WARNING:tensorflow:Issue encountered when serializing data_preprocessing.
+Type is unsupported, or the types of the items don't match field type in CollectionDef. Note this is a warning and probably safe to ignore.
+'NoneType' object has no attribute 'name'
+INFO:root:Epoch: 1 TD_loss: -372.3402281781121 Avg_reward: -924.8151525674602 Avg_entropy: 1.8297983258962631

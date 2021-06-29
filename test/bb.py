@@ -18,7 +18,11 @@ CUSHION = 10  # BB
 SUMMARY_DIR = './results'
 LOG_FILE = './results/log_sim_bb'
 # log in format of time_stamp bit_rate buffer_size rebuffer_time chunk_size download_time reward
-
+bad_files = ["trace_5642_http---www.youtube.com",
+"ferry.nesoddtangen-oslo-report.2011-02-01_1000CET.log",
+"trace_32551_http---www.amazon.com",
+"trace_942598_http---www.youtube.com",
+"trace_5294_http---www.youtube.com"]
 
 def main():
 
@@ -43,7 +47,7 @@ def main():
     r_batch = []
 
     video_count = 0
-
+    # import pdb; pdb.set_trace()
     while True:  # serve video forever
         # the action is from the last decision
         # this is to make the framework similar to the real
@@ -51,19 +55,28 @@ def main():
         video_chunk_size, next_video_chunk_sizes, \
         end_of_video, video_chunk_remain = \
             net_env.get_video_chunk(bit_rate)
-
+        # import pdb; pdb.set_trace()
         time_stamp += delay  # in ms
         time_stamp += sleep_time  # in ms
 
         # reward is video quality - rebuffer penalty
+        # import pdb; pdb.set_trace()
         reward = VIDEO_BIT_RATE[bit_rate] / M_IN_K \
                  - REBUF_PENALTY * rebuf \
                  - SMOOTH_PENALTY * np.abs(VIDEO_BIT_RATE[bit_rate] -
                                            VIDEO_BIT_RATE[last_bit_rate]) / M_IN_K
         r_batch.append(reward)
-
+        # print reward
+        # if rebuf > 28:
+            # print "rebuf"
+            # import pdb; pdb.set_trace()
+        # if any(i in log_file.name for i in bad_files):
+        #     # import pdb; pdb.set_trace()
+        #     # if reward<-100:
+        #     #     import pdb; pdb.set_trace()
+        #     print "reward is " + str(reward)
         last_bit_rate = bit_rate
-
+        # import pdb; pdb.set_trace()
         # log time_stamp, bit_rate, buffer_size, reward
         log_file.write(str(time_stamp / M_IN_K) + '\t' +
                        str(VIDEO_BIT_RATE[bit_rate]) + '\t' +
@@ -90,6 +103,12 @@ def main():
             last_bit_rate = DEFAULT_QUALITY
             bit_rate = DEFAULT_QUALITY  # use the default action here
             r_batch = []
+            # import pdb; pdb.set_trace()
+            # bad_files = ["trace_5642_http---www.youtube.com","ferry.nesoddtangen-oslo-report.2011-02-01_1000CET.log","trace_32551_http---www.amazon.com","trace_942598_http---www.youtube.com","trace_5294_http---www.youtube.com"]
+            # if  in log_file:
+            # import pdb; pdb.set_trace()
+            # if any(i in log_file.name for i in bad_files):
+            #     import pdb; pdb.set_trace()
 
             print "video count", video_count
             video_count += 1

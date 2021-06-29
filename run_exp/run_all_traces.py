@@ -5,13 +5,13 @@ import urllib
 import subprocess
 
 
-TRACE_PATH = '../cooked_traces/' 
+TRACE_PATH = '../cooked_traces/'
 
 with open('./chrome_retry_log', 'wb') as f:
 	f.write('chrome retry log\n')
 
 os.system('sudo sysctl -w net.ipv4.ip_forward=1')
-
+# import pdb; pdb.set_trace()
 ip_data = json.loads(urllib.urlopen("http://ip.jsontest.com/").read())
 ip = str(ip_data['ip'])
 

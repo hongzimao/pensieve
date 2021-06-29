@@ -61,6 +61,7 @@ class Environment:
                          * B_IN_MB / BITS_IN_BYTE
             duration = self.cooked_time[self.mahimahi_ptr] \
                        - self.last_mahimahi_time
+            # import pdb; pdb.set_trace()
 
             packet_payload = throughput * duration * PACKET_PAYLOAD_PORTION
 
@@ -136,10 +137,10 @@ class Environment:
             end_of_video = True
             self.buffer_size = 0
             self.video_chunk_counter = 0
-            
+
             self.trace_idx += 1
             if self.trace_idx >= len(self.all_cooked_time):
-                self.trace_idx = 0            
+                self.trace_idx = 0
 
             self.cooked_time = self.all_cooked_time[self.trace_idx]
             self.cooked_bw = self.all_cooked_bw[self.trace_idx]

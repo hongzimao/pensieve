@@ -17,8 +17,13 @@ def load_trace(cooked_trace_folder=COOKED_TRACE_FOLDER):
         with open(file_path, 'rb') as f:
             for line in f:
                 parse = line.split()
-                cooked_time.append(float(parse[0]))
-                cooked_bw.append(float(parse[1]))
+                # import pdb; pdb.set_trace()
+                try:
+                    cooked_time.append(float(parse[0]))
+                    cooked_bw.append(float(parse[1]))
+                except:
+                    import pdb; pdb.set_trace()
+                    # continue
         all_cooked_time.append(cooked_time)
         all_cooked_bw.append(cooked_bw)
         all_file_names.append(cooked_file)
