@@ -3,7 +3,7 @@ import tensorflow as tf
 import tflearn
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
-from pudb.remote import set_trace
+
 
 GAMMA = 0.99
 A_DIM = 6
@@ -160,7 +160,6 @@ class CriticNetwork(object):
             apply_gradients(zip(self.critic_gradients, self.network_params))
 
     def create_critic_network(self):
-        # set_trace(term_size=(80, 24))
         with tf.variable_scope('critic'):
         # with tf.compat.v1.variable_scope('critic'):
             inputs = tflearn.input_data(shape=[None, self.s_dim[0], self.s_dim[1]])

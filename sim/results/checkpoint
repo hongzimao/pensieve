@@ -1,3 +1,2 @@
-model_checkpoint_path: "nn_model_ep_200.ckpt"
+model_checkpoint_path: "nn_model_ep_100.ckpt"
 all_model_checkpoint_paths: "nn_model_ep_100.ckpt"
-all_model_checkpoint_paths: "nn_model_ep_200.ckpt"
